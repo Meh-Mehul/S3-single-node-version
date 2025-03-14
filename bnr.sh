@@ -23,4 +23,4 @@ echo "Step 3: Running Containers..."
 docker-compose up -d
 echo "Client Built and Ready."
 cd ./proxy-client && npm install && npm start
-echo "DONOT Close this terminal, open a new one to work in now..."
+# echo "DONOT Close this terminal, open a new one to work in now..."
