@@ -1,0 +1,94 @@
+version: '3.1'
+services:
+  # These are the writing servers, reading and writing server write to same volumes
+  a_write:
+    container_name: aw
+    image: s3-writer
+    ports:
+      - "5000:5000"
+    volumes:
+      - a1:/app/uploads
+  b_write:
+    container_name: bw
+    image: s3-writer
+    ports:
+      - "5001:5000"
+    volumes:
+      - b1:/app/uploads
+  c_write:
+    container_name: cw
+    image: s3-writer
+    ports:
+      - "5002:5000"
+    volumes:
+      - c1:/app/uploads
+  d_write:
+    container_name: dw
+    image: s3-writer
+    ports:
+      - "5003:5000"
+    volumes:
+      - d1:/app/uploads
+  
+
+  # These are the reader servers, for further scaling, next step would be to add LBs to each of the sub-servers (or perhaps use a pub-sub) to support load per server.
+  a_read:
+    container_name: ar
+    image: s3-reader
+    ports:
+      - "3000:3000"
+    volumes:
+      - a1:/app/uploads
+  b_read:
+    container_name: br
+    image: s3-reader
+    ports:
+      - "3001:3000"
+    volumes:
+      - b1:/app/uploads
+  c_read:
+    container_name: cr
+    image: s3-reader
+    ports:
+      - "3002:3000"
+    volumes:
+      - c1:/app/uploads
+  d_read:
+    container_name: dr
+    image: s3-reader
+    ports:
+      - "3003:3000"
+    volumes:
+      - d1:/app/uploads
+
+
+  ## Config-db
+  mongo:
+    image: mongo:latest
+    container_name: mongo-db
+    restart: always
+    # ports:
+      # - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: password
+    volumes:
+      - mongo_data:/data/db
+
+  ## This is for the config-db-service
+  config-db:
+    image: config-db-service
+    container_name: config-db-server
+    depends_on:
+      - mongo
+    environment:
+      - MONGO_URI=mongodb://admin:password@mongo:27017
+    ports:
+      - "6000:6000"
+  
+volumes:
+  a1:
+  b1:
+  c1:
+  d1:
+  mongo_data:
