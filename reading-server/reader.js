@@ -18,6 +18,8 @@ app.post('/get', (req, res) => {
     if (!fs.existsSync(filePath)) {
         return res.status(404).json({ "Message": "Resource not found" });
     }
+    const contentType ='application/octet-stream'; 
+    res.setHeader("Content-Type", contentType);
     const reader = fs.createReadStream(filePath);
     reader.pipe(res);
     reader.on('error', (err) => {

@@ -85,7 +85,21 @@ services:
       - MONGO_URI=mongodb://admin:password@mongo:27017
     ports:
       - "6000:6000"
-  
+  ## ITS not configured to be run as a container yet so better run locally for now?
+  # p_client:
+  #   container_name: proxy-client
+  #   image: proxy-client
+  #   ports:
+  #     - "7000:7000"
+  #   environment:
+  #     - CONFIG_DB_URL=http://config-db:6000
+  #   depends_on:
+  #     - a_read
+  #     - b_read
+  #     - c_read
+  #     - d_read
+  #     - mongo
+  #     - config-db
 volumes:
   a1:
   b1:

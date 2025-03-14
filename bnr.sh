@@ -18,6 +18,7 @@ else
 fi
 cp main.exe ../
 cd ..
+# cd proxy-client && docker build -t proxy-client . && cd ..
 echo "Step 3: Running Containers..."
 docker-compose up -d
 echo "Client Built and Ready."
