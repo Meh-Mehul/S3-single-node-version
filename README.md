@@ -18,3 +18,8 @@ This is a simple system design for a S3-like object store. I have used couple of
 1. ```Write```: ```./main.exe write <path_of_dir_or_file_to_upload>```.
 2. ```Read```: ```./main.exe read <URI_of_upload> <HASH_of_file> <BASE_DIR_TO_Write_the_read_to>```.
 3. ```Status```: ```./main.exe status <URI_of_upload>```
+### Architecture-Overview:
+![alt text](https://github.com/Meh-Mehul/S3-single-node-version/blob/main/arch_s3.png)
+### NOTES:
+1. I did not make any Delete/Update Route but they can be easily added by just adding two more services (but that would put heavy load on single laptop, hence not recommended for testing).
+2. In the diagram, i have added a pub-sub layer interface for communicating with the ```BSS``` and ```IWL```, but i have not implemented it yet. This is just for sharing load-between similar storages services because streaming files is a heavy task and we would need more that one server per storage for read/write.
